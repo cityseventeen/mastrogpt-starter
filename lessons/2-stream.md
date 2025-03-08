@@ -256,13 +256,8 @@ b'{"model":"llama3.1:8b","response":"ome","done":false}'`
 # Countdown generator
 
 ```python
-import time
-def count_to_zero(n):
-  while n > 0:
-    yield f"{n}...\n"
-    n -= 1
-    time.sleep(1)
-  yield "Go!\n"
+
+
 ```
 
 Test:
