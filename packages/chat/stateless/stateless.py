@@ -26,6 +26,7 @@ import json, socket, traceback
 def stream(args, lines):
   sock = args.get("STREAM_HOST")
   port = int(args.get("STREAM_PORT"))
+  print(f"DEBUG  {sock}  {port}")
   out = ""
   with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((sock, port))
@@ -35,7 +36,7 @@ def stream(args, lines):
         #TODO:E2.2 fix this streaming implementation
         # line is a json string and you have to extract only the "response" field
 
-        response_extracted = json.loads(line.decode('utf-8')).get("response", "error")
+        response_extracted = json.loads(line.decode("utf-8")).get("response", "error")
 
         msg = {"output": response_extracted}
         out += response_extracted
@@ -67,7 +68,7 @@ def stateless(args):
     # on input 'llmama' or 'deepseek' and change the inp to "who are you"
     #END TODO
 
-    msg = { "model": model, "prompt": message_to_model, "stream": True }
+    msg = { "model": MODEL, "prompt": "message_to_model", "stream": True }
     lines = req.post(llm, json=msg, stream=True).iter_lines()
     out = stream(args, lines)
   return { "output": out, "streaming": True}
