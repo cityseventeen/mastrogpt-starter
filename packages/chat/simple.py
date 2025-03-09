@@ -2,7 +2,7 @@
 #--param OLLAMA_HOST $OLLAMA_HOST
 #--param AUTH $AUTH
 
-# *** sopra è per leggere le varaibili di ambiente configuraizone, senza dover passarle ogni volta nel terminale da ops cli
+# *** sopra è per leggere le variabili di ambiente configuraizone, senza dover passarle ogni volta nel terminale da ops cli
 
 import os, requests as req
 MODEL = "llama3.1:8b"

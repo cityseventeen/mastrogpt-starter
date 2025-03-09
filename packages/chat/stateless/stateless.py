@@ -1,6 +1,7 @@
+#--kind python:default
 #--web true
 #--param OLLAMA_HOST $OLLAMA_HOST
-#--AUTH $AUTH
+#--param AUTH $AUTH
 
 import os, requests as req, json, socket
 
