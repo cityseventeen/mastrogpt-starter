@@ -45,7 +45,6 @@ def stream(args, lines):
 
 def stateless(args):
   global MODEL
-  global MODEL_LIST
   llm = url(args)
   out = f"Welcome to {MODEL}"
   inp = args.get("input", "")
@@ -54,17 +53,19 @@ def stateless(args):
     #TODO:E2.3 
     model = MODEL #default
     message_to_model = ""
+
     if inp in MODEL_LIST.__members__:
       model = chooseModel(inp)
       message_to_model = message_to_model_const
     else:
       message_to_model = inp
 
+    print(f"input utente: {inp}")
     # add if to switch to llama3.1:8b or deepseek-r1:32b
     # on input 'llmama' or 'deepseek' and change the inp to "who are you"
     #END TODO
 
-    msg = { "model": MODEL, "prompt": "message_to_model", "stream": True }
+    msg = { "model": model, "prompt": message_to_model, "stream": True }
     lines = req.post(llm, json=msg, stream=True).iter_lines()
     out = stream(args, lines)
   return { "output": out, "streaming": True}
@@ -72,9 +73,8 @@ def stateless(args):
 
 
 
-def chooseModel(input):
-  global MODEL_LIST
-  if input in MODEL_LIST.__members__:
-    return MODEL_LIST.__members__[input].value
+def chooseModel(model_name):
+  if model_name in MODEL_LIST.__members__:
+    return MODEL_LIST[model_name].value
   else:
     raise Exception("Modello non presente in lista")
