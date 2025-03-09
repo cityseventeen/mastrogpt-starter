@@ -1,8 +1,3 @@
-#--kind python:default
-#--web true
-#--param OLLAMA_HOST $OLLAMA_HOST
-#--param AUTH $AUTH
-
 import os, requests as req, json, socket
 
 MODEL="llama3.1:8b"
