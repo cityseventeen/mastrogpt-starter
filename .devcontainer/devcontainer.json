@@ -14,7 +14,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"pgant.antonio-ops-vscode-extension",
+				"pgant.antonio-ops-vscode-extension@1.3.2",
+				"ms-python.python",
 				"ms-vscode.test-adapter-converter",
 				"pamaron.pytest-runner",
 				"marp-team.marp-vscode",
