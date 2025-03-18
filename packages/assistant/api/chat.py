@@ -8,6 +8,26 @@ ROLE = "system:You are an helpful assistant."
 #fix it to extract line.choices[0].delta.content
 #END TODO
 
+# init added by me
+import json, socket, traceback
+def streamer(args, lines):
+  sock = args.get("STREAM_HOST") ; port = int(args.get("STREAM_PORT"))
+  out = ""
+  with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((sock, port))
+    try:
+      for line in lines:
+        msg = {"output": line}
+        s.sendall(json.dumps(msg).encode("utf-8"))
+        out += str(line) #; print(line, end='')
+    except Exception as e:
+      traceback.print_exc(e)
+      out = str(e)
+  return out
+
+# end added by me
+
+
 class Chat:
     def __init__(self, args):
         
@@ -23,6 +43,7 @@ class Chat:
         self.messages = []
         self.add(ROLE)
         
+        self.args = args # added by me
         #TODO:E4.1 
         # save args in a field
         #END TODO
@@ -40,11 +61,15 @@ class Chat:
         res = self.client.chat.completions.create(
             model=MODEL,
             messages=self.messages,
+            stream = True # added by me
         )
         # END TODO
         try: 
+            out_streamed = ""
             #TODO:E4.1 stream the result 
-            out = res.choices[0].message.content
+            # modified with for
+            for m in res:
+                out_streamed = m.choices[0].delta.content # modified messages in delta
             #END TODO
             self.add(f"assistant:{out}")
         except:
